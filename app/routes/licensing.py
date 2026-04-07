@@ -31,7 +31,7 @@ async def criar_empreendimento(payload: DevelopmentCreateRequest):
             payload.description
         )
 
-    # 🔴 Erro HTTP vindo do httpx (API externa respondeu erro)
+  
     except httpx.HTTPStatusError as e:
         status_code = e.response.status_code
 
