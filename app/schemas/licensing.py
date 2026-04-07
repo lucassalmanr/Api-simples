@@ -12,3 +12,8 @@ class EmpreendimentoResponse(BaseModel):
     id:int
     message: str
     data: dict
+
+class DevelopmentCreateRequest(BaseModel):
+    name: str
+    description: str
+    e_ia: bool

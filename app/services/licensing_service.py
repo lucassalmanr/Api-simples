@@ -15,16 +15,7 @@ class LicensingService:
                 "description": payload.description}
             }
     
-    def processar_empreendimento2(self, payload: EmpreendimentoRequest) -> dict:
-        novoid = self.definir_ultimoid()
-        return {
-            "id": novoid,
-            "message": f"Empreendimento recebido com sucesso area:{payload.area} e status: {payload.stats} id:{novoid}",
-            "data": {
-            "name": payload.name,
-            "description": payload.description,
-            "area": payload.area}
-            }
+   
     
     def mostrarsucesso(self, payload: EmpreendimentoRequest):
         return {
