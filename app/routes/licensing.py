@@ -71,14 +71,14 @@ async def criar_empreendimento(payload: DevelopmentCreateRequest):
                 detail=f"Erro HTTP inesperado: {e.response.text}"
             )
 
-    # 🌐 Erro de conexão (timeout, API fora do ar, etc.)
+    
     except httpx.RequestError:
         raise HTTPException(
             status_code=503,
             detail="Erro de conexão com a API externa"
         )
 
-    # 💣 Qualquer outro erro
+   
     except Exception as e:
         raise HTTPException(
             status_code=500,
