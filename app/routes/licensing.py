@@ -1,16 +1,17 @@
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Form, File, UploadFile
 import httpx
 from app.clients.licensing_client import LicensingClient
-from app.schemas.licensing import DevelopmentCreateRequest
+from app.schemas.licensing import DevelopmentCreateRequest, FormData
 from app.services.licensing_service import LicensingService
 from app.schemas.licensing import EmpreendimentoRequest, EmpreendimentoResponse
+from typing import Annotated, Optional
 
 
 
 router = APIRouter(prefix="/api/v1/licenciamento", tags=["Licenciamento"])
 service = LicensingService()
-service2 = LicensingClient()
+client = LicensingClient()
 
 
 @router.get("/health")
@@ -26,7 +27,7 @@ def criar_empreendimento_teste(payload: EmpreendimentoRequest):
 @router.post("/criar-empreendimento")
 async def criar_empreendimento(payload: DevelopmentCreateRequest):
     try:
-        return await service2.create_development(
+        return await client.create_development(
             payload.name,
             payload.description
         )
@@ -71,17 +72,28 @@ async def criar_empreendimento(payload: DevelopmentCreateRequest):
                 detail=f"Erro HTTP inesperado: {e.response.text}"
             )
 
-    
+   
     except httpx.RequestError:
         raise HTTPException(
             status_code=503,
             detail="Erro de conexão com a API externa"
         )
 
-   
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Erro interno: {str(e)}"
         )        
 
+@router.post("/api/licensing/ai/inputs")
+async def forms(
+    development_id: Annotated[int, Form()],
+    user_input: Annotated[str, Form()],
+    document: Annotated[Optional[UploadFile], File()] = None):
+        return {
+        "id": development_id,
+        "input": user_input,
+        "file_name": document.filename if document else "Nenhum arquivo"
+    }
+    
+    

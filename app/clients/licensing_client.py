@@ -2,12 +2,6 @@ import httpx
 from app.core.config import settings
 
 
-
-
-
-
-
-
 class LicensingClient:
 
     async def create_development(self, name: str, description: str) -> dict:

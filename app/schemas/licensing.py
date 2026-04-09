@@ -17,3 +17,7 @@ class DevelopmentCreateRequest(BaseModel):
     name: str
     description: str
     e_ia: bool
+    
+class FormData(BaseModel):
+    development_id: int
+    user_input: dict
