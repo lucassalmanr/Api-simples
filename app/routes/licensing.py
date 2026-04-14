@@ -90,12 +90,12 @@ async def criar_empreendimento(payload: DevelopmentCreateRequest):
             detail=f"Erro interno: {str(e)}"
         )        
 
-@router.post(f"/api/licensing/ai/inputs/{ultimo_id}")
+@router.post(f"/api/licensing/ai/inputs/{id}")
 async def forms(
     development_id: Annotated[int, Form()],
     user_input: Annotated[str, Form()],
     document: Annotated[Optional[UploadFile], File()] = None):
-            print(f"ID 2: {ultimo_id}")
+            print(f"ID 2: {id}")
             return {
             "id": development_id,
             "input": user_input,
